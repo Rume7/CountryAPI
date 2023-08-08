@@ -4,7 +4,6 @@ import com.codehacks.countries.model.Country;
 import com.codehacks.countries.service.CountryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -26,18 +25,19 @@ public class CountryController {
     }
 
     @GetMapping("/")
-    public ResponseEntity<?> getAllCountries() {
+    public ResponseEntity<List<Country>> getAllCountries() {
         Mono<List<Country>> countries = this.countryService.getCountries();
         if (countries.hasElement().block()) {
-            return new ResponseEntity<>(countries, HttpStatus.FOUND);
+            List<Country> gottenCountries = countries.block();
+            return new ResponseEntity<>(gottenCountries, HttpStatus.FOUND);
         }
         return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
     }
 
-    @GetMapping("/nameOfCountry")
+    @GetMapping("/{nameOfCountry}")
     public ResponseEntity<?> getCountry(@PathVariable("nameOfCountry") String country) {
 
         Mono<List<Country>> countryList = countryService.searchCountry(country);
-        return new ResponseEntity<>(countryList, HttpStatus.FOUND);
+        return new ResponseEntity<>(countryList.block(), HttpStatus.FOUND);
     }
 }
