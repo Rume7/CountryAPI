@@ -2,6 +2,7 @@ package com.codehacks.countries.controller;
 
 import com.codehacks.countries.model.Country;
 import com.codehacks.countries.service.CountryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ public class CountryController {
 
     private final CountryService countryService;
 
+    @Autowired
     public CountryController(CountryService countryService) {
         this.countryService = countryService;
     }
