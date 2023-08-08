@@ -31,6 +31,10 @@ public class CountryService {
                             emoji
                             currency
                             code
+                            phone
+                            continent {
+                                name
+                            }
                         }
                     }
                 """;
